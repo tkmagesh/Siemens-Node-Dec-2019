@@ -6,15 +6,16 @@ function isStatic(resourceName) {
     return staticResExtns.indexOf(path.extname(resourceName)) >= 0;
 }
 
-module.exports = function(req, res){
+module.exports = function(req, res, next){
     var resourceName = req.urlObj.pathname === '/' ? '/index.html' : req.urlObj.pathname;
-    if (isStatic(resourceName)) {
-        var resourceFullName = path.join(__dirname, resourceName);
-        if (!fs.existsSync(resourceFullName)) {
-            res.statusCode = 404;
-            res.end();
-            return;
-        }
-        fs.createReadStream(resourceFullName).pipe(res);
+    var resourceFullName = path.join(__dirname, resourceName);
+    if (isStatic(resourceName) && fs.existsSync(resourceFullName)) {
+        var stream = fs.createReadStream(resourceFullName)
+        stream.pipe(res);
+        stream.on('end', function(){
+            next();
+        });   
+    } else {
+        next();
     }
 }

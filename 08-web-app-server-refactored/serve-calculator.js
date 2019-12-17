@@ -3,7 +3,7 @@ var querystring = require('querystring'),
     
 module.exports = function(req, res, next){
     if (req.urlObj.pathname === '/calculator' && req.method === 'GET') {
-        var queryData = querystring.parse(req.urlObj.query);
+        var queryData = req.queryData;
         var op = queryData.op,
             x = parseInt(queryData.x),
             y = parseInt(queryData.y),

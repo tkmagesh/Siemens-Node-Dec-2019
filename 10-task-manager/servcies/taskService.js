@@ -1,7 +1,15 @@
+var taskDb = require('./taskDb');
 var taskList = [];
 
-function getAll(){
-    return taskList;
+/* function getAll(callback){
+    taskDb.getData(function (err, taskList){
+        callback(err, taskList);
+    });
+    
+} */
+
+function getAll() {
+    return taskDb.getData()
 }
 
 function get(taskId){

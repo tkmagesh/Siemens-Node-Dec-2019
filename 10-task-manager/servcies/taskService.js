@@ -1,8 +1,4 @@
-var taskList = [
-    { id: 1, name: 'Explore Bangalore', isCompleted: false },
-    { id: 2, name: 'Learn JavaScript', isCompleted: true },
-    { id: 3, name: 'Master Node.js', isCompleted: false }
-];
+var taskList = [];
 
 function getAll(){
     return taskList;

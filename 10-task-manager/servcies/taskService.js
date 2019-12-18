@@ -19,9 +19,10 @@ function get(taskId){
 }
 
 function addNew(taskData){
-    taskData.id = taskList.reduce(function (result, task) {
+    /* taskData.id = taskList.reduce(function (result, task) {
         return result > task.id ? result : task.id;
-    }, 0) + 1;
+    }, 0) + 1; */
+    taskKData.id = taskList.reduce((result, task) => result > task.id ? result : task.id, 0) + 1;
     taskList.push(taskData);
     return taskData;
 }
@@ -37,9 +38,11 @@ function update(taskId, taskData){
 }
 
 function remove(taskId){
-    taskList = taskList.filter(function (task) {
+    /* taskList = taskList.filter(function (task) {
         return task.id !== taskId;
-    });
+    }); */
+
+    taskList = taskList.filter(task => task.id !== taskId);
 }
 
 module.exports = { getAll, get, addNew, update, remove };

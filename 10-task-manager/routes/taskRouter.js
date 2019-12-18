@@ -34,4 +34,31 @@ router.post('/', function(req, res, next){
     
 });
 
+router.put('/:id', function(req, res, next){
+    var updatedTask = req.body,
+        taskId = parseInt(req.params.id);
+    taskList = taskList.map(function(task){
+        if (task.id === taskId){
+            return updatedTask;
+        } else {
+            return task;
+        }
+    });
+    res.json(updatedTask);
+});
+
+router.delete('/:id', function(req, res, next){
+    var taskId = parseInt(req.params.id);
+    if (!taskList.find(function(task){
+        return task.id === taskId;
+    })){
+        next(createError(404));
+    } else {
+        taskList = taskList.filter(function(task){
+            return task.id !== taskId;
+        });
+        res.json(null);
+    }
+});
+
 module.exports = router;

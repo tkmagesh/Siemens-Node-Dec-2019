@@ -38,7 +38,7 @@ function saveData(data){
 } */
 
 //using util module
-var util = require('util');
+/* var util = require('util');
 var readFileAsync = util.promisify(fs.readFile),
     writeFileAsync = util.promisify(fs.writeFile);
 
@@ -52,6 +52,23 @@ function getData() {
 
 function saveData(data) {
     return writeFileAsync(dbFileName, JSON.stringify(data));
+} */
+
+//using bluebird's 'promisifyAll' method
+var bluebird = require('bluebird');
+
+bluebird.promisifyAll(fs);
+
+function getData() {
+    return fs.readFileAsync(dbFileName, { encoding: 'utf8' })
+        .then(function (fileContents) {
+            var data = JSON.parse(fileContents);
+            return data;
+        });
+}
+
+function saveData(data) {
+    return fs.writeFileAsync(dbFileName, JSON.stringify(data));
 }
 
 module.exports = { getData, saveData };
